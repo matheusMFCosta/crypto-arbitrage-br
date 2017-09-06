@@ -1,0 +1,1 @@
+,{"name":"flowbtc","cost":0.0035,"bid":16451.02,"ask":16600,"timestamp":1504645346559,"equals":13},{"name":"flowbtc","cost":0.0035,"bid":16599,"ask":16600,"timestamp":1504647577643,"equals":19}
