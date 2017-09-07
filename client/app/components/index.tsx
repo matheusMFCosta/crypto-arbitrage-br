@@ -29,6 +29,7 @@ class App extends React.Component<Appprops, {}> {
         this.props.fetchExchangeStoresPointsArray("1h");
     }
     render() {
+        //const sellPrice = key.pointsArray[key.pointsArray.length - 1]* 100 / key.pointsArray[0]
         return (
             <div>
                 <div className=" col-md-0 col-sm-0" />
@@ -150,7 +151,33 @@ class App extends React.Component<Appprops, {}> {
                                             </div>
                                             <div className="col-md-2 col-sm-2 col-xs-2">
                                                 <p> Valor para Vender: {key.pointsArray[key.pointsArray.length - 1][1]} </p>
+                                                {key.pointsArray[key.pointsArray.length - 1][1] * 100 / key.pointsArray[0][1] - 100 > 0 && (
+                                                    <p className="green">
+                                                        {(key.pointsArray[key.pointsArray.length - 1][1] * 100 / key.pointsArray[0][1] -
+                                                            100).toFixed(2)}%
+                                                    </p>
+                                                )}
+                                                {key.pointsArray[key.pointsArray.length - 1][1] * 100 / key.pointsArray[0][1] - 100 <=
+                                                    0 && (
+                                                    <p className="red">
+                                                        {(key.pointsArray[key.pointsArray.length - 1][1] * 100 / key.pointsArray[0][1] -
+                                                            100).toFixed(2)}%
+                                                    </p>
+                                                )}
                                                 <p> Valor para Comprar: {key.pointsArray[key.pointsArray.length - 1][2]} </p>
+                                                {key.pointsArray[key.pointsArray.length - 1][2] * 100 / key.pointsArray[0][2] - 100 > 0 && (
+                                                    <p className="green">
+                                                        {(key.pointsArray[key.pointsArray.length - 1][2] * 100 / key.pointsArray[0][2] -
+                                                            100).toFixed(2)}%
+                                                    </p>
+                                                )}
+                                                {key.pointsArray[key.pointsArray.length - 1][2] * 100 / key.pointsArray[0][2] - 100 <=
+                                                    0 && (
+                                                    <p className="red">
+                                                        {(key.pointsArray[key.pointsArray.length - 1][2] * 100 / key.pointsArray[0][2] -
+                                                            100).toFixed(2)}%
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                     );
