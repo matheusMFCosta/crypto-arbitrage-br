@@ -6,7 +6,7 @@
     "scripts": {
         "build:dev": "cross-env NODE_ENV=development webpack --config webpack/webpack.dev.config.js",
         "build:prod": "cross-env NODE_ENV=production webpack --config webpack/webpack.production.config.js",
-        "start:dev": "cross-env NODE_ENV=development node serverscreator/development",
+        "start": "cross-env NODE_ENV=development node serverscreator/development",
         "start:prod": "cross-env NODE_ENV=production node serverscreator/production",
         "test": "tsc && mocha --require test-setup --recursive ./dist/**/__spec__/**/*-spec.js"
     },

@@ -9,16 +9,21 @@ export enum appActionsName {
     FETCH_EXCHANGE_STORES_TAX_DATA_SUCCEEDED = "FETCH_EXCHANGE_STORES_TAX_DATA_SUCCEEDED",
     FETCH_EXCHANGE_STORES_POINTS_ARRAY = "FETCH_EXCHANGE_STORES_POINTS_ARRAY",
     FETCH_EXCHANGE_STORES_POINTS_ARRAY_SUCCEEDED = "FETCH_EXCHANGE_STORES_POINTS_ARRAY_SUCCEEDED",
-    CHANGE_INVEST_VALUE = "CHANGE_INVEST_VALUE"
+    CHANGE_INVEST_VALUE = "CHANGE_INVEST_VALUE",
+    UPDATE_APPLICATION = "UPDATE_APPLICATION"
 }
 
-export class appInit implements Operation {
-    public type: string = appActionsName.INIT_APP;
+export class upDateApplication implements Operation {
+    public type: string = appActionsName.UPDATE_APPLICATION;
 
     constructor(public payload: boolean) {}
 
-    public Reduce(state: App): App {
-        return assign(state, { init: this.payload });
+    process({ getState, action }, dispatch, done) {
+        //dispatch(new fetchExchangeStoresPointsArray(action.payload));
+        setInterval(() => {
+            dispatch(new fetchExchangeStoresPointsArray("?"));
+            console.log("updsta!!");
+        }, 15000);
     }
 }
 
@@ -28,13 +33,16 @@ export class fetchExchangeStoresPointsArray implements Operation {
     constructor(public payload: string) {}
 
     public Reduce(state: App): App {
-        return assign(state, { exchangeStoresPointsArray: [] });
+        if (this.payload == "?") return state;
+        return assign(state, { period: this.payload });
     }
 
     process({ getState, action }, dispatch, done) {
-        const exchangeStores = ["foxbit", "flowbtc", "mercado"];
+        console.log(action.payload, action.payload == "?");
+        const period = action.payload == "?" ? getState().app.period : action.payload;
+        const exchangeStores = ["foxbit", "flowbtc", "mercado", "braziliex", "NegocieCoins"];
         for (let key in exchangeStores) {
-            axios("https://localhost.com/server/getData?exchange=" + exchangeStores[key] + "&period=" + action.payload)
+            axios("https://localhost.com/server/getData?exchange=" + exchangeStores[key] + "&period=" + period)
                 .then(resp => dispatch(new fetchExchangeStoresPointsArraySucceeded(resp.data)))
                 .catch(err => {
                     console.error(err); // log since could be render err
@@ -50,6 +58,18 @@ export class fetchExchangeStoresPointsArraySucceeded implements Operation {
     constructor(public payload: exchangeStoreData) {}
 
     public Reduce(state: App): App {
+        for (let i = 0; i < state.exchangeStoresPointsArray.length; i++) {
+            const currentArray = state.exchangeStoresPointsArray[i];
+            if (currentArray.name == this.payload.name) {
+                return assign(state, {
+                    exchangeStoresPointsArray: [
+                        ...state.exchangeStoresPointsArray.slice(0, i),
+                        this.payload,
+                        ...state.exchangeStoresPointsArray.slice(i + 1, state.exchangeStoresPointsArray.length - 1)
+                    ]
+                });
+            }
+        }
         return assign(state, { exchangeStoresPointsArray: [...state.exchangeStoresPointsArray, this.payload] });
     }
 }
@@ -87,7 +107,7 @@ export class changeInvestValue implements Operation {
 }
 
 export const appActions = {
-    appInit,
+    upDateApplication,
     fetchExchangeStoresPointsArray,
     fetchExchangeStoresPointsArraySucceeded,
     fetchExchangeStoresTaxData,

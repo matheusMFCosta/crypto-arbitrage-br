@@ -25,5 +25,23 @@
         "bitWithDraw": [{ "type": "percent", "value": 0 }],
         "activeOrderExecution": [{ "type": "percent", "value": 0.0035 }],
         "passiveOrderExecution": [{ "type": "percent", "value": 0.0035 }]
+    },
+    {
+        "name": "braziliex",
+        "realDeposit": [{ "type": "percent", "value": 0 }],
+        "bitDeposit": [{ "type": "percent", "value": 0 }],
+        "realWithDraw": [{ "type": "real", "value": 9 }, { "type": "percent", "value": 0.0025 }],
+        "bitWithDraw": [{ "type": "bitcoin", "value": 0.001 }],
+        "activeOrderExecution": [{ "type": "percent", "value": 0.005 }],
+        "passiveOrderExecution": [{ "type": "percent", "value": 0.005 }]
+    },
+    {
+        "name": "negocieCoins",
+        "realDeposit": [{ "type": "percent", "value": 0 }],
+        "bitDeposit": [{ "type": "percent", "value": 0 }],
+        "realWithDraw": [{ "type": "real", "value": 8.9 }, { "type": "percent", "value": 0.009 }],
+        "bitWithDraw": [{ "type": "bitcoin", "value": 0.001 }],
+        "activeOrderExecution": [{ "type": "percent", "value": 0.003 }],
+        "passiveOrderExecution": [{ "type": "percent", "value": 0.004 }]
     }
 ]

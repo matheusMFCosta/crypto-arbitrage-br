@@ -50,7 +50,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
         exchangeStoreTaxData1: exchangeStoreTax,
         exchangeStoreTaxData2: exchangeStoreTax
     ) {
-        const difFPorcentage = exchangeStoreAskPrice * 100 / exchangeStoreBidPrice - 100;
+        const difFPorcentage = 100 - exchangeStoreAskPrice * 100 / exchangeStoreBidPrice;
         //const diffPorcentageInvetiment = difFPorcentage / 100 * investValue;
         const costWithWithDraw = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
         const costWithBitDeposit = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
@@ -60,7 +60,6 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
 
         return {
             difFPorcentage,
-
             costWithWithDraw,
             costWithBitDeposit,
             profit,
@@ -71,7 +70,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
     render() {
         const exchangeStoreTaxData1 = this.getExchangeStoreTaxData(this.props.exchangeStorename1);
         const exchangeStoreTaxData2 = this.getExchangeStoreTaxData(this.props.exchangeStorename2);
-        const investValue = parseInt(this.props.investValue);
+        const investValue = parseFloat(this.props.investValue);
         const taxValues = this.buildInvestmentValues(
             investValue,
             this.props.exchangeStoreBidPrice,
@@ -79,38 +78,33 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
             exchangeStoreTaxData1,
             exchangeStoreTaxData2
         );
-        console.log(taxValues);
+        console.log(this.props);
         return (
             <div>
-                <div className=" col-md-12 col-sm-12">
-                    <div className="panel panel-default">
-                        <div className="panel-heading">
-                            <div>
-                                {this.props.exchangeStorename1} <i className="fa fa-arrow-right" aria-hidden="true" />{" "}
-                                {this.props.exchangeStorename2}
-                                {taxValues.difFPorcentage > 0 && (
+                {taxValues.profit > 0 && (
+                    <div className=" col-md-12 col-sm-12">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">
+                                <div>
+                                    {this.props.exchangeStorename1} <i className="fa fa-arrow-right" aria-hidden="true" />{" "}
+                                    {this.props.exchangeStorename2}
                                     <div className="pull-right">
                                         <i className="fa fa-check-circle-o green " aria-hidden="true" />
                                     </div>
-                                )}
-                                {taxValues.difFPorcentage <= 0 && (
-                                    <div className="pull-right">
-                                        <i className="fa fa-times-circle-o red " aria-hidden="true" />
-                                    </div>
-                                )}
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <p>
+                                    {" "}
+                                    Ask: R${this.props.exchangeStoreAskPrice.toFixed(2)} Bid: R${this.props.exchangeStoreBidPrice.toFixed(2)}
+                                </p>
+                                <p>Porcentagem de diferenca {taxValues.difFPorcentage.toFixed(2)}%</p>
+                                <p>lucro R${taxValues.profit.toFixed(2)} </p>
+                                <p>valor final R${taxValues.investmentFinalValue.toFixed(2)} </p>
                             </div>
                         </div>
-                        <div className="panel-body">
-                            <p>
-                                {" "}
-                                Ask: R${this.props.exchangeStoreAskPrice.toFixed(2)} Bid: R${this.props.exchangeStoreBidPrice.toFixed(2)}
-                            </p>
-                            <p>Porcentagem de diferenca {taxValues.difFPorcentage.toFixed(2)}%</p>
-                            <p>lucro R${taxValues.profit.toFixed(2)} </p>
-                            <p>valor final R${taxValues.investmentFinalValue.toFixed(2)} </p>
-                        </div>
                     </div>
-                </div>
+                )}
             </div>
         );
     }

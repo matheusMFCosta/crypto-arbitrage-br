@@ -8,7 +8,8 @@ const multifactorInitialState: App = {
     init: false,
     exchangeStoresPointsArray: [],
     exchangeStoresTax: [],
-    investValue: "200"
+    investValue: "200",
+    period: "1h"
 };
 
 export const appReducerNoFilter = (state: App = multifactorInitialState, action: Operation) => {

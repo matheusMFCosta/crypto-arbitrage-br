@@ -3,6 +3,7 @@ export interface App {
     exchangeStoresPointsArray: exchangeStoresPointsArray;
     exchangeStoresTax: exchangeStoresTax;
     investValue: string;
+    period: string;
 }
 
 export type exchangeStoresPointsArray = Array<exchangeStoreData>;

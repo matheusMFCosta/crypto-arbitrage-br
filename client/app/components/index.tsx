@@ -8,13 +8,14 @@ import InvestimentChart from "./investimentChart";
 var { Chart } = require("react-google-charts");
 
 interface Appprops {
-    appInit: Function;
+    upDateApplication: Function;
     fetchExchangeStoresPointsArray: Function;
     fetchExchangeStoresTaxData: Function;
     changeInvestValue: Function;
     exchangeStoresPointsArray: exchangeStoresPointsArray;
     exchangeStoresTax: exchangeStoresTax;
     investValue: string;
+    period: string;
 }
 
 class App extends React.Component<Appprops, {}> {
@@ -22,10 +23,10 @@ class App extends React.Component<Appprops, {}> {
         super(props, context);
     }
 
-    componentDidMount() {
-        this.props.appInit(true);
+    componentWillMount() {
+        this.props.upDateApplication(this.props.period);
         this.props.fetchExchangeStoresTaxData();
-        this.props.fetchExchangeStoresPointsArray("12h");
+        this.props.fetchExchangeStoresPointsArray("1h");
     }
     render() {
         return (
@@ -54,7 +55,6 @@ class App extends React.Component<Appprops, {}> {
                                             const currentPoint1 = key1.pointsArray[key1.pointsArray.length - 1];
                                             const currentPoint2 = key2.pointsArray[key2.pointsArray.length - 1];
                                             if (key1.name == key2.name) return <span />;
-                                            console.log(key1, key2);
                                             return (
                                                 <div className="col-md-6 col-sm-6 col-xs-6">
                                                     <InvestimentChart
@@ -72,7 +72,7 @@ class App extends React.Component<Appprops, {}> {
                                 </div>
 
                                 <div className="btn-group" data-toggle="buttons">
-                                    <label className="btn btn-primary active">
+                                    <label className="btn btn-primary">
                                         <input
                                             onClick={() => this.props.fetchExchangeStoresPointsArray("24h")}
                                             type="checkbox"
@@ -129,11 +129,11 @@ class App extends React.Component<Appprops, {}> {
                                                                     type: "string"
                                                                 },
                                                                 {
-                                                                    label: "Compra",
+                                                                    label: "pra vender",
                                                                     type: "number"
                                                                 },
                                                                 {
-                                                                    label: "Venda",
+                                                                    label: "pra comprar",
                                                                     type: "number"
                                                                 }
                                                             ]}
@@ -149,7 +149,8 @@ class App extends React.Component<Appprops, {}> {
                                                 </div>
                                             </div>
                                             <div className="col-md-2 col-sm-2 col-xs-2">
-                                                <p> CurrentValue: {key.pointsArray[key.pointsArray.length - 1][1]} </p>
+                                                <p> Valor para Vender: {key.pointsArray[key.pointsArray.length - 1][1]} </p>
+                                                <p> Valor para Comprar: {key.pointsArray[key.pointsArray.length - 1][2]} </p>
                                             </div>
                                         </div>
                                     );
@@ -166,11 +167,12 @@ class App extends React.Component<Appprops, {}> {
 const mapStateToProps = (state: appStateTypings, ownProps) => ({
     exchangeStoresPointsArray: state.app.exchangeStoresPointsArray,
     exchangeStoresTax: state.app.exchangeStoresTax,
-    investValue: state.app.investValue
+    investValue: state.app.investValue,
+    period: state.app.period
 });
 
 const mapDispatchToProps = dispatch => ({
-    appInit: (value: boolean) => dispatch(new appActions.appInit(value)),
+    upDateApplication: (value: boolean) => dispatch(new appActions.upDateApplication(value)),
     fetchExchangeStoresPointsArray: period => dispatch(new appActions.fetchExchangeStoresPointsArray(period)),
     fetchExchangeStoresTaxData: () => dispatch(new appActions.fetchExchangeStoresTaxData()),
     changeInvestValue: (value: string) => dispatch(new appActions.changeInvestValue(value))

@@ -36,20 +36,45 @@ const buildPointsArray = fileData => {
 
 const filterPointsArrayByPeriod = (period, pointsArray) => {
     const minParts = 4;
+    const maxPointsInGraph = 150;
 
     if (period == "10m") {
         return pointsArray.slice(pointsArray.length - (minParts * 10 + 1), pointsArray.length - 1);
     } else if (period == "1h") {
         return pointsArray.slice(pointsArray.length - (minParts * 60 + 1), pointsArray.length - 1);
     } else if (period == "6h") {
-        return pointsArray.slice(pointsArray.length - (minParts * 360 + 1), pointsArray.length - 1);
+        const slicedArray = pointsArray.slice(pointsArray.length - (minParts * 360 + 1), pointsArray.length - 1);
+        const slicedPoints = compressPointsArray(slicedArray, (minParts * 360 / 150).toFixed(0));
+        return slicedPoints;
     } else if (period == "12h") {
-        return pointsArray.slice(pointsArray.length - (minParts * 720 + 1), pointsArray.length - 1);
+        const slicedArray = pointsArray.slice(pointsArray.length - (minParts * 720 + 1), pointsArray.length - 1);
+        const slicedPoints = compressPointsArray(slicedArray, (minParts * 720 / 150).toFixed(0));
+        return slicedPoints;
     } else if (period == "24h") {
-        return pointsArray.slice(pointsArray.length - (minParts * 1440 + 1), pointsArray.length - 1);
+        const slicedArray = pointsArray.slice(pointsArray.length - (minParts * 1440 + 1), pointsArray.length - 1);
+        const slicedPoints = compressPointsArray(slicedArray, (minParts * 1440 / 150).toFixed(0));
+        return slicedPoints;
     } else {
         return [];
     }
+};
+
+const compressPointsArray = (pointsArray, rate) => {
+    let compressesdArray = [];
+    let compressedPoit = ["", 0, 0];
+    for (let pointIndex = 1; pointIndex < pointsArray.length; pointIndex++) {
+        const currentPoint = pointsArray[pointIndex];
+        compressedPoit[0] = currentPoint[0];
+        compressedPoit[1] = compressedPoit[1] + currentPoint[1];
+        compressedPoit[2] = compressedPoit[2] + currentPoint[2];
+        if (pointIndex % rate == 0 && pointIndex != 1) {
+            compressedPoit[1] = compressedPoit[1] / rate;
+            compressedPoit[2] = compressedPoit[2] / rate;
+            compressesdArray.push(compressedPoit);
+            compressedPoit = ["", 0, 0];
+        }
+    }
+    return compressesdArray;
 };
 
 const exchangeData = res => {
