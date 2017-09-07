@@ -6,7 +6,9 @@ import { Operation } from "./../utils/functions";
 
 const multifactorInitialState: App = {
     init: false,
-    exchangeStoresData: []
+    exchangeStoresPointsArray: [],
+    exchangeStoresTax: [],
+    investValue: "200"
 };
 
 export const appReducerNoFilter = (state: App = multifactorInitialState, action: Operation) => {

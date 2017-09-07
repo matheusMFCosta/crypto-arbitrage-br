@@ -1,0 +1,29 @@
+[
+    {
+        "name": "foxbit",
+        "realDeposit": [{ "type": "percent", "value": 0 }],
+        "bitDeposit": [{ "type": "percent", "value": 0 }],
+        "realWithDraw": [{ "type": "percent", "value": 0.0139 }],
+        "bitWithDraw": [{ "type": "bitcoin", "value": 0.00045 }],
+        "activeOrderExecution": [{ "type": "percent", "value": 0.0025 }],
+        "passiveOrderExecution": [{ "type": "percent", "value": 0.005 }]
+    },
+    {
+        "name": "mercado",
+        "realDeposit": [{ "type": "real", "value": 2.9 }, { "type": "percent", "value": 0.0199 }],
+        "bitDeposit": [{ "type": "percent", "value": 0 }],
+        "realWithDraw": [{ "type": "real", "value": 2.9 }, { "type": "percent", "value": 0.0199 }],
+        "bitWithDraw": [{ "type": "percent", "value": 0 }],
+        "activeOrderExecution": [{ "type": "percent", "value": 0.003 }],
+        "passiveOrderExecution": [{ "type": "percent", "value": 0.007 }]
+    },
+    {
+        "name": "flowbtc",
+        "realDeposit": [{ "type": "percent", "value": 0.005 }],
+        "bitDeposit": [{ "type": "percent", "value": 0 }],
+        "realWithDraw": [{ "type": "percent", "value": 0.005 }],
+        "bitWithDraw": [{ "type": "percent", "value": 0 }],
+        "activeOrderExecution": [{ "type": "percent", "value": 0.0035 }],
+        "passiveOrderExecution": [{ "type": "percent", "value": 0.0035 }]
+    }
+]

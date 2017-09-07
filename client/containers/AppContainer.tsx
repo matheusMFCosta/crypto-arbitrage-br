@@ -31,7 +31,26 @@ class AppContainer extends React.Component<AppContainerProps, AppContainerState>
                 <div className="pull-right" />
                 <div>
                     <div id="appContainer">
-                        {this.props.children}
+                        <div className="row">
+                            <div className="col-md-2 col-sm-2 col-xs-2">
+                                <a href="#" className="list-group-item disabled">
+                                    APP
+                                </a>
+                                <a href="#" className="list-group-item list-group-item-action">
+                                    Dapibus ac facilisis in
+                                </a>
+                                <a href="#" className="list-group-item list-group-item-action">
+                                    Morbi leo risus
+                                </a>
+                                <a href="#" className="list-group-item list-group-item-action">
+                                    Porta ac consectetur ac
+                                </a>
+                                <a href="#" className="list-group-item list-group-item-action ">
+                                    Vestibulum at eros
+                                </a>
+                            </div>
+                            <div className="col-md-10 col-sm-10 col-xs-10">{this.props.children}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,8 +58,7 @@ class AppContainer extends React.Component<AppContainerProps, AppContainerState>
     }
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({});
 
