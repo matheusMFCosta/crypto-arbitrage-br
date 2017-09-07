@@ -1,0 +1,1 @@
+,{"name":"mercado","bid":16800,"ask":16900,"timestamp":1504816755000}

@@ -5,11 +5,12 @@ var proxy = require("proxy-middleware");
 var url = require("url");
 var express = require("express");
 var cookieParser = require("cookie-parser");
+const enrouten = require("express-enrouten");
 
 var webpack = require("webpack");
 var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpackHotMiddleware = require("webpack-hot-middleware");
-var config = require("../webpack/webpack.production.config");
+var config = require("../webpack/webpack.dev.config");
 
 var Dashboard = require("webpack-dashboard");
 var DashboardPlugin = require("webpack-dashboard/plugin");
@@ -32,12 +33,11 @@ var port = 443;
 
 console.log("Environment: DEVELOPMENT");
 var compiler = webpack(config);
-var dashboard = new Dashboard();
-compiler.apply(new DashboardPlugin(dashboard.setData));
-
+// var dashboard = new Dashboard();
+// compiler.apply(new DashboardPlugin(dashboard.setData));
 app.use(
     require("webpack-dev-middleware")(compiler, {
-        quiet: true,
+        quiet: false,
         publicPath: config.output.publicPath
     })
 );
@@ -48,10 +48,16 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/indexDev.html"));
-});
+// app.use("/client", function(req, res) {
+//     res.sendFile(path.join(__dirname, "../client/indexDev.html"));
+// });
 
-http.createServer(app).listen(80);
+// app.use("/server", function(req, res) {
+//     fetchData.fetchData();
+// });
 
-https.createServer(credentials, app).listen(443);
+app.use(enrouten({ directory: "./routes.js" }));
+
+http.createServer(app).listen(process.env.PORT || 80);
+
+//https.createServer(credentials, app).listen(443);

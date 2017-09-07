@@ -22,7 +22,7 @@ class App extends React.Component<Appprops, {}> {
     constructor(props, context) {
         super(props, context);
     }
-
+    wow;
     componentWillMount() {
         this.props.upDateApplication(this.props.period);
         this.props.fetchExchangeStoresTaxData();

@@ -1,2 +1,0 @@
-web:     sudo cross-env NODE_ENV=development node serverscreator/development
-worker:  sudo cross-env NODE_ENV=development node serverscreator/development 

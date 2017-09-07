@@ -58,6 +58,6 @@ app.use(cookieParser());
 
 app.use(enrouten({ directory: "./routes.js" }));
 
-http.createServer(app).listen(80);
+http.createServer(app).listen(process.env.PORT || 80);
 
-https.createServer(credentials, app).listen(443);
+//https.createServer(credentials, app).listen(443);

@@ -1,0 +1,1 @@
+,{"name":"braziliex","bid":16428,"ask":17390,"timestamp":1504816769444}

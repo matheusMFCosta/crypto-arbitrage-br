@@ -40,9 +40,9 @@ export class fetchExchangeStoresPointsArray implements Operation {
     process({ getState, action }, dispatch, done) {
         console.log(action.payload, action.payload == "?");
         const period = action.payload == "?" ? getState().app.period : action.payload;
-        const exchangeStores = ["foxbit", "flowbtc", "mercado", "braziliex", "NegocieCoins"];
+        const exchangeStores = ["foxbit", "flowbtc", "mercado", "braziliex", "negocieCoins"];
         for (let key in exchangeStores) {
-            axios("https://localhost.com/server/getData?exchange=" + exchangeStores[key] + "&period=" + period)
+            axios("/server/getData?exchange=" + exchangeStores[key] + "&period=" + period)
                 .then(resp => dispatch(new fetchExchangeStoresPointsArraySucceeded(resp.data)))
                 .catch(err => {
                     console.error(err); // log since could be render err
@@ -78,7 +78,7 @@ export class fetchExchangeStoresTaxData implements Operation {
     public type: string = appActionsName.FETCH_EXCHANGE_STORES_TAX_DATA;
 
     process({ getState, action }, dispatch, done) {
-        axios("https://localhost.com/server/getExchangesData")
+        axios("/server/getExchangesData")
             .then(resp => dispatch(new fetchExchangeStoresTaxDataSucceeded(resp.data)))
             .catch(err => {
                 console.error(err); // log since could be render err
