@@ -7,6 +7,6 @@ module.exports = router => {
     });
 
     router.get("/server*", (req, res) => {
-        server.init(req, res);
+        server.route(req, res);
     });
 };

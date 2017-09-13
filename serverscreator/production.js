@@ -19,7 +19,7 @@ var http = require("http");
 var https = require("https");
 var privateKey = fs.readFileSync("serverscreator/server.key", "utf8");
 var certificate = fs.readFileSync("serverscreator/server.crt", "utf8");
-var fetch = require("isomorphic-fetch");
+var server = require("./../server/index.js");
 
 var credentials = {
     key: privateKey,
@@ -55,6 +55,8 @@ app.use(cookieParser());
 // app.use("/server", function(req, res) {
 //     fetchData.fetchData();
 // });
+
+server.init();
 
 app.use(enrouten({ directory: "./routes.js" }));
 

@@ -23,7 +23,7 @@ export class upDateApplication implements Operation {
         setInterval(() => {
             dispatch(new fetchExchangeStoresPointsArray("?"));
             console.log("updsta!!");
-        }, 15000);
+        }, 150000);
     }
 }
 

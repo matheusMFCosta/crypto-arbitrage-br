@@ -77,8 +77,6 @@ async function fetchData() {
                 console.log("newStep");
                 for (let key in response) {
                     const currentNode = response[key];
-                    console.log(key, currentNode);
-
                     if (currentNode.name) {
                         // if (!lastNodeElement[currentNode.name]) {
                         //     lastNodeElement[currentNode.name] = {};
