@@ -67,7 +67,7 @@ const init = () => {
                     const exchangeStoresTax = fs.readFileSync(`./server/storesPrices.json`, "utf8");
                     const exchangeStoreTaxData1 = getExchangeStoreTaxData(firstExchangePoint, exchangeStoresTax);
                     const exchangeStoreTaxData2 = getExchangeStoreTaxData(secondExchangePoint, exchangeStoresTax);
-                    const investValue = 200;
+                    const investValue = 10000;
 
                     const taxValues = buildInvestmentValues(
                         investValue,
