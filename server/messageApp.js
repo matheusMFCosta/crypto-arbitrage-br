@@ -48,8 +48,8 @@ const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStore
 
 const init = () => {
     const exchanges = ["foxbit", "flowbtc", "mercado", "braziliex", "negocieCoins"];
-    setInterval(() => {
-        console.log("Mensagem nextstep");
+    setTimeout(() => {
+        console.log("nexStep app");
         for (let i = 0; i < exchanges.length; i++) {
             for (let j = 0; j < exchanges.length; j++) {
                 if (i != j) {
@@ -67,7 +67,7 @@ const init = () => {
                     const exchangeStoresTax = fs.readFileSync(`./server/storesPrices.json`, "utf8");
                     const exchangeStoreTaxData1 = getExchangeStoreTaxData(firstExchangePoint, exchangeStoresTax);
                     const exchangeStoreTaxData2 = getExchangeStoreTaxData(secondExchangePoint, exchangeStoresTax);
-                    const investValue = 10000;
+                    const investValue = 200;
 
                     const taxValues = buildInvestmentValues(
                         investValue,
@@ -86,6 +86,7 @@ const init = () => {
                         };
                         bot.sendMessage(chats[0], JSON.stringify(message, null, "\t"));
                     }
+                    init();
                 }
             }
         }
