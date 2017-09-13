@@ -12,8 +12,6 @@ var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpackHotMiddleware = require("webpack-hot-middleware");
 var config = require("../webpack/webpack.dev.config");
 
-var Dashboard = require("webpack-dashboard");
-var DashboardPlugin = require("webpack-dashboard/plugin");
 var fs = require("fs");
 var http = require("http");
 var https = require("https");
@@ -33,8 +31,7 @@ var port = 443;
 
 console.log("Environment: DEVELOPMENT");
 var compiler = webpack(config);
-// var dashboard = new Dashboard();
-// compiler.apply(new DashboardPlugin(dashboard.setData));
+
 app.use(
     require("webpack-dev-middleware")(compiler, {
         quiet: false,

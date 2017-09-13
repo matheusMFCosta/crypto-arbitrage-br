@@ -12,8 +12,6 @@ var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpackHotMiddleware = require("webpack-hot-middleware");
 var config = require("../webpack/webpack.dev.config");
 
-var Dashboard = require("webpack-dashboard");
-var DashboardPlugin = require("webpack-dashboard/plugin");
 var fs = require("fs");
 var http = require("http");
 var https = require("https");
