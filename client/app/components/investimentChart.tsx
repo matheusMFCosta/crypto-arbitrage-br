@@ -28,8 +28,10 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
 
     calculateTaxOverInvestment(investValue: number, taxPrices: Array<taxPrice>, exchangeStoreTaxData1: number) {
         let totalTax = 0;
+        console.log(taxPrices);
         for (let key in taxPrices) {
             const currentTax = taxPrices[key];
+            console.log(currentTax);
             if (currentTax.type == "real") {
                 totalTax = totalTax + currentTax.value;
             }
@@ -40,6 +42,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
                 totalTax = totalTax + currentTax.value * exchangeStoreTaxData1;
             }
         }
+        console.log(totalTax);
         return totalTax;
     }
 
@@ -52,9 +55,20 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
     ) {
         const difFPorcentage = 100 - exchangeStoreAskPrice * 100 / exchangeStoreBidPrice;
         //const diffPorcentageInvetiment = difFPorcentage / 100 * investValue;
+        const costWithBuyOfBt = this.calculateTaxOverInvestment(
+            investValue,
+            exchangeStoreTaxData1.passiveOrderExecution,
+            exchangeStoreBidPrice
+        );
         const costWithWithDraw = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
         const costWithBitDeposit = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
-        const investmentFinalValue = (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit);
+        const costWithSellBT = this.calculateTaxOverInvestment(
+            investValue,
+            exchangeStoreTaxData2.passiveOrderExecution,
+            exchangeStoreBidPrice
+        );
+        const investmentFinalValue =
+            (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit - costWithBuyOfBt - costWithSellBT);
         const profit = investmentFinalValue - investValue;
         //const investmentFinalValue = investValue + profit;
 
@@ -78,7 +92,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
             exchangeStoreTaxData1,
             exchangeStoreTaxData2
         );
-        console.log(this.props);
+
         return (
             <div>
                 {taxValues.profit > 0 && (

@@ -30,12 +30,13 @@ const calculateTaxOverInvestment = (investValue, taxPrices, exchangeStoreTaxData
 
 const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStoreAskPrice, exchangeStoreTaxData1, exchangeStoreTaxData2) => {
     const difFPorcentage = 100 - exchangeStoreAskPrice * 100 / exchangeStoreBidPrice;
-    //const diffPorcentageInvetiment = difFPorcentage / 100 * investValue;
+    const costWithBuyOfBt = calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.passiveOrderExecution, exchangeStoreBidPrice);
     const costWithWithDraw = calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
     const costWithBitDeposit = calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
-    const investmentFinalValue = (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit);
+    const costWithSellBT = calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.passiveOrderExecution, exchangeStoreBidPrice);
+    const investmentFinalValue =
+        (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit - costWithBuyOfBt - costWithSellBT);
     const profit = investmentFinalValue - investValue;
-    //const investmentFinalValue = investValue + profit;
 
     return {
         difFPorcentage,
