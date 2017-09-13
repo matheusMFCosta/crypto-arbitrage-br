@@ -86,10 +86,10 @@ const init = () => {
                         };
                         bot.sendMessage(chats[0], JSON.stringify(message, null, "\t"));
                     }
-                    init();
                 }
             }
         }
+        init();
     }, 30000);
 };
 
