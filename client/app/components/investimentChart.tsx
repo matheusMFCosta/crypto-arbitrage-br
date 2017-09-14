@@ -28,7 +28,6 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
 
     calculateTaxOverInvestment(investValue: number, taxPrices: Array<taxPrice>, exchangeStoreTaxData1: number) {
         let totalTax = 0;
-        console.log(taxPrices);
         for (let key in taxPrices) {
             const currentTax = taxPrices[key];
             console.log(currentTax);
@@ -39,10 +38,11 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
                 totalTax = totalTax + investValue * currentTax.value;
             }
             if (currentTax.type == "bitcoin") {
+                console.log(currentTax.value, exchangeStoreTaxData1);
                 totalTax = totalTax + currentTax.value * exchangeStoreTaxData1;
             }
         }
-        console.log(totalTax);
+        console.log("TAX", totalTax);
         return totalTax;
     }
 
@@ -53,22 +53,49 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
         exchangeStoreTaxData1: exchangeStoreTax,
         exchangeStoreTaxData2: exchangeStoreTax
     ) {
-        const difFPorcentage = 100 - exchangeStoreAskPrice * 100 / exchangeStoreBidPrice;
-        //const diffPorcentageInvetiment = difFPorcentage / 100 * investValue;
+        console.log("precos");
+        console.log(exchangeStoreTaxData1, exchangeStoreTaxData2);
+        console.log("investimento", investValue);
+
+        let investmentFinalValue = investValue;
+
         const costWithBuyOfBt = this.calculateTaxOverInvestment(
-            investValue,
+            investmentFinalValue,
             exchangeStoreTaxData1.passiveOrderExecution,
             exchangeStoreBidPrice
         );
-        const costWithWithDraw = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
-        const costWithBitDeposit = this.calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
+        investmentFinalValue = investmentFinalValue - costWithBuyOfBt;
+        console.log("custo de compra bitcoin", costWithBuyOfBt);
+        console.log("investmentFinalValue = ", investmentFinalValue);
+
+        const costWithWithDraw = this.calculateTaxOverInvestment(
+            investmentFinalValue,
+            exchangeStoreTaxData1.bitWithDraw,
+            exchangeStoreBidPrice
+        );
+        investmentFinalValue = investmentFinalValue - costWithWithDraw;
+        console.log("custo de saque de bitcoins", costWithWithDraw);
+        console.log("investmentFinalValue = ", investmentFinalValue);
+
+        const costWithBitDeposit = this.calculateTaxOverInvestment(
+            investmentFinalValue,
+            exchangeStoreTaxData2.bitDeposit,
+            exchangeStoreAskPrice
+        );
+        investmentFinalValue = investmentFinalValue - costWithBitDeposit;
+        console.log("custo de deposito de bitcoins", costWithBitDeposit);
+        console.log("investmentFinalValue = ", investmentFinalValue);
+
         const costWithSellBT = this.calculateTaxOverInvestment(
-            investValue,
+            investmentFinalValue,
             exchangeStoreTaxData2.passiveOrderExecution,
             exchangeStoreBidPrice
         );
-        const investmentFinalValue =
-            (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit - costWithBuyOfBt - costWithSellBT);
+        investmentFinalValue = investmentFinalValue - costWithSellBT;
+        console.log("custo de venda de bitcoins ", costWithSellBT);
+        console.log("investmentFinalValue = ", investmentFinalValue);
+
+        const difFPorcentage = investmentFinalValue * 100 / investValue;
         const profit = investmentFinalValue - investValue;
         //const investmentFinalValue = investValue + profit;
 

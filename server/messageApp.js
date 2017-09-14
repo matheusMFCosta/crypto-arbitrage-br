@@ -29,15 +29,30 @@ const calculateTaxOverInvestment = (investValue, taxPrices, exchangeStoreTaxData
 };
 
 const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStoreAskPrice, exchangeStoreTaxData1, exchangeStoreTaxData2) => {
-    const difFPorcentage = 100 - exchangeStoreAskPrice * 100 / exchangeStoreBidPrice;
-    const costWithBuyOfBt = calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.passiveOrderExecution, exchangeStoreBidPrice);
-    const costWithWithDraw = calculateTaxOverInvestment(investValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
-    const costWithBitDeposit = calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
-    const costWithSellBT = calculateTaxOverInvestment(investValue, exchangeStoreTaxData2.passiveOrderExecution, exchangeStoreBidPrice);
-    const investmentFinalValue =
-        (difFPorcentage / 100 + 1) * (investValue - costWithWithDraw - costWithBitDeposit - costWithBuyOfBt - costWithSellBT);
-    const profit = investmentFinalValue - investValue;
+    let investmentFinalValue = investValue;
 
+    const costWithBuyOfBt = calculateTaxOverInvestment(
+        investmentFinalValue,
+        exchangeStoreTaxData1.passiveOrderExecution,
+        exchangeStoreBidPrice
+    );
+    investmentFinalValue = investmentFinalValue - costWithBuyOfBt;
+
+    const costWithWithDraw = calculateTaxOverInvestment(investmentFinalValue, exchangeStoreTaxData1.bitWithDraw, exchangeStoreBidPrice);
+    investmentFinalValue = investmentFinalValue - costWithWithDraw;
+
+    const costWithBitDeposit = calculateTaxOverInvestment(investmentFinalValue, exchangeStoreTaxData2.bitDeposit, exchangeStoreAskPrice);
+    investmentFinalValue = investmentFinalValue - costWithBitDeposit;
+
+    const costWithSellBT = calculateTaxOverInvestment(
+        investmentFinalValue,
+        exchangeStoreTaxData2.passiveOrderExecution,
+        exchangeStoreBidPrice
+    );
+    investmentFinalValue = investmentFinalValue - costWithSellBT;
+
+    const difFPorcentage = investmentFinalValue * 100 / investValue;
+    const profit = investmentFinalValue - investValue;
     return {
         difFPorcentage,
         costWithWithDraw,
@@ -54,9 +69,11 @@ const init = () => {
         for (let i = 0; i < exchanges.length; i++) {
             for (let j = 0; j < exchanges.length; j++) {
                 if (i != j) {
+                    const firstExchangeName = exchanges[i];
+                    const secondExchangeName = exchanges[j];
                     const firstFileName = exchanges[i] + ".txt";
                     const secondFileName = exchanges[j] + ".txt";
-                    //console.log(firstFileName);
+
                     const firstFilePlotData = fs.readFileSync(`./server/pointsPlot/${firstFileName}`, "utf8");
                     const firstExchangePoints = JSON.parse("[" + firstFilePlotData.slice(1, firstFilePlotData.length) + "]");
                     const firstExchangePoint = firstExchangePoints[Object.keys(firstExchangePoints).length - 1];
@@ -65,11 +82,11 @@ const init = () => {
                     const secondExchangePoints = JSON.parse("[" + secondFilePlotData.slice(1, secondFilePlotData.length) + "]");
                     const secondExchangePoint = secondExchangePoints[Object.keys(secondExchangePoints).length - 1];
 
-                    const exchangeStoresTax = fs.readFileSync(`./server/storesPrices.json`, "utf8");
-                    const exchangeStoreTaxData1 = getExchangeStoreTaxData(firstExchangePoint, exchangeStoresTax);
-                    const exchangeStoreTaxData2 = getExchangeStoreTaxData(secondExchangePoint, exchangeStoresTax);
-                    const investValue = 10000;
+                    const exchangeStoresTax = JSON.parse(fs.readFileSync(`./server/storesPrices.json`, "utf8"));
+                    const exchangeStoreTaxData1 = getExchangeStoreTaxData(firstExchangeName, exchangeStoresTax);
+                    const exchangeStoreTaxData2 = getExchangeStoreTaxData(secondExchangeName, exchangeStoresTax);
 
+                    const investValue = 10000;
                     const taxValues = buildInvestmentValues(
                         investValue,
                         secondExchangePoint.bid,
