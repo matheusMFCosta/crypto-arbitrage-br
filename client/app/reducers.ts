@@ -1,4 +1,3 @@
-//import { assign } from "lodash";
 var { filterActions } = require("redux-ignore");
 import { App } from "./app";
 import { appActionsName } from "./actions";

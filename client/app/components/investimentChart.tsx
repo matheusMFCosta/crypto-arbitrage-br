@@ -58,6 +58,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
         console.log("investimento", investValue);
 
         let investmentFinalValue = investValue;
+        const difFPorcentage = exchangeStoreBidPrice * 100 / exchangeStoreAskPrice - 100;
 
         const costWithBuyOfBt = this.calculateTaxOverInvestment(
             investmentFinalValue,
@@ -95,8 +96,13 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
         console.log("custo de venda de bitcoins ", costWithSellBT);
         console.log("investmentFinalValue = ", investmentFinalValue);
 
-        const difFPorcentage = investmentFinalValue * 100 / investValue;
+        const valueAfterTaxes = investmentFinalValue;
+        //const difFPorcentage = investmentFinalValue * 100 / investValue;
+        investmentFinalValue = investmentFinalValue * (1 + difFPorcentage / 100);
+
+        console.log("ddd ", investmentFinalValue);
         const profit = investmentFinalValue - investValue;
+        const profitPercentage = investmentFinalValue * 100 / investValue - 100;
         //const investmentFinalValue = investValue + profit;
 
         return {
@@ -104,7 +110,9 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
             costWithWithDraw,
             costWithBitDeposit,
             profit,
-            investmentFinalValue
+            investmentFinalValue,
+            valueAfterTaxes,
+            profitPercentage
         };
     }
 
@@ -119,7 +127,7 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
             exchangeStoreTaxData1,
             exchangeStoreTaxData2
         );
-
+        //taxValues.profit
         return (
             <div>
                 {taxValues.profit > 0 && (
@@ -139,8 +147,10 @@ class investimentChart extends React.Component<investimentChartprops, {}> {
                                     {" "}
                                     Ask: R${this.props.exchangeStoreAskPrice.toFixed(2)} Bid: R${this.props.exchangeStoreBidPrice.toFixed(2)}
                                 </p>
-                                <p>Porcentagem de diferenca {taxValues.difFPorcentage.toFixed(2)}%</p>
+                                <p>Valor depois das taxas {taxValues.valueAfterTaxes.toFixed(2)}</p>
+                                <p>Porcentagem de aumento {taxValues.difFPorcentage.toFixed(2)}%</p>
                                 <p>lucro R${taxValues.profit.toFixed(2)} </p>
+                                <p>Porcentagem de lucro {taxValues.profitPercentage.toFixed(2)}%</p>
                                 <p>valor final R${taxValues.investmentFinalValue.toFixed(2)} </p>
                             </div>
                         </div>

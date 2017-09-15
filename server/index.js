@@ -1,12 +1,14 @@
 var fs = require("fs");
 var dataFlow = require("./getData.js");
 var populateGraph = require("./populateGraph.js");
+var transactions = require("./transactions.js");
 //var bot = require("./messageApp.js");
 var messageApp = require("./messageApp.js");
 
 const init = (req, res) => {
     populateGraph.init();
     messageApp.init();
+    transactions.init();
 };
 
 const route = (req, res) => {

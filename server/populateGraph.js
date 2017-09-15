@@ -7,6 +7,7 @@ var axios = require("axios");
 
 async function fetchDataFoxBit() {
     const foxbit = new ccxt.foxbit();
+    //console.log(foxbit);
     const market = await foxbit.fetchTicker("BTC/BRL");
     return {
         name: "foxbit",

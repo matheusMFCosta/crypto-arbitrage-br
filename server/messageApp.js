@@ -30,6 +30,7 @@ const calculateTaxOverInvestment = (investValue, taxPrices, exchangeStoreTaxData
 
 const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStoreAskPrice, exchangeStoreTaxData1, exchangeStoreTaxData2) => {
     let investmentFinalValue = investValue;
+    const difFPorcentage = exchangeStoreBidPrice * 100 / exchangeStoreAskPrice - 100;
 
     const costWithBuyOfBt = calculateTaxOverInvestment(
         investmentFinalValue,
@@ -51,14 +52,19 @@ const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStore
     );
     investmentFinalValue = investmentFinalValue - costWithSellBT;
 
-    const difFPorcentage = investmentFinalValue * 100 / investValue;
+    const valueAfterTaxes = investmentFinalValue;
+    investmentFinalValue = investmentFinalValue * (1 + difFPorcentage / 100);
     const profit = investmentFinalValue - investValue;
+    const profitPercentage = investmentFinalValue * 100 / investValue - 100;
+
     return {
         difFPorcentage,
         costWithWithDraw,
         costWithBitDeposit,
         profit,
-        investmentFinalValue
+        investmentFinalValue,
+        valueAfterTaxes,
+        profitPercentage
     };
 };
 
@@ -94,12 +100,15 @@ const init = () => {
                         exchangeStoreTaxData1,
                         exchangeStoreTaxData2
                     );
+
                     if (taxValues.profit + investValue >= investValue * 102 / 100) {
                         const message = {
                             origin: firstExchangePoint.name,
                             target: secondExchangePoint.name,
+                            ValueAfterTaxes: taxValues.valueAfterTaxes.toFixed(2),
                             profit: taxValues.propfit,
-                            investiment: investValue,
+                            prifitPercent: taxValues.profitPercentage.toFixed(2),
+                            investiment: investValue.toFixed(2),
                             investmentFinalValue: taxValues.investmentFinalValue
                         };
                         bot.sendMessage(chats[0], JSON.stringify(message, null, "\t"));
