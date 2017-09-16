@@ -44,9 +44,6 @@ app.use(
 );
 
 var https = require("http");
-setInterval(function() {
-    https.get("https://infinite-shelf-92987.herokuapp.com/client");
-}, 300000); // every 5 minutes (300000)
 
 server.init();
 
@@ -57,3 +54,12 @@ app.use(enrouten({ directory: "./routes.js" }));
 http.createServer(app).listen(process.env.PORT || 80);
 
 //https.createServer(credentials, app).listen(443);
+
+const wow = () => {
+    setTimeout(function() {
+        https.get("https://infinite-shelf-92987.herokuapp.com/client");
+        wow();
+    }, 300000); // every 5 minutes (300000)
+};
+
+wow();
