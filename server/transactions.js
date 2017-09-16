@@ -32,7 +32,6 @@ const getTicker = blinktrade => {
 
 // 1- buy / 2-sell
 const buyOfer = (blinktrade, operation, ammount, price) => {
-    console.log(operation, ammount, price);
     return new Promise(resolve => {
         blinktrade
             .sendOrder({
@@ -55,16 +54,15 @@ const buyOfer = (blinktrade, operation, ammount, price) => {
 async function fetchDataFoxBit() {
     // setInterval(() => {
     const realBalance = await getBalance(blinktrade);
-    console.log(realBalance);
     const ticker = await getTicker(blinktrade);
     let firstDivision = 0;
     let secondDivision = 0;
     let thirdDivision = 0;
+
     if (lastValues.length < 11) {
         lastValues.push(ticker.buy);
     } else {
         if (ticker.buy == lastValues[lastValues.length - 1]) {
-            console.log("mewsmo");
         } else {
             lastValues.push(ticker.buy);
             for (let i = 0; i < lastValues.length; i++) {
@@ -72,31 +70,29 @@ async function fetchDataFoxBit() {
                     firstDivision = firstDivision + lastValues[i];
                 } else if (i >= 4 && i < 8) {
                     secondDivision = secondDivision + lastValues[i];
-                } else if (i >= 8 && i < 12) {
-                    thirdDivision = thirdDivision + lastValues[i];
                 }
             }
             //console.log(first);
             const first = (lastValues[2] + lastValues[3]) / (lastValues[1] + lastValues[0]);
             const firstASecond = secondDivision / firstDivision;
-            const thirdASecond = secondDivision / thirdDivision;
-            console.log(first < 1 && firstASecond < 1 && thirdASecond > 1);
-            console.log(first > 1 && firstASecond > 1 && thirdASecond < 1);
+            const thirdASecond = (lastValues[11] + lastValues[10]) / (lastValues[9] + lastValues[8]);
             if (first < 1 && firstASecond < 1 && thirdASecond > 1) {
                 const realBalance = await getBalance(blinktrade);
-                console.log("AEEWWW1");
                 if (realBalance.BRL > 0) {
-                    const order = await buyOfer(blinktrade, "1", parseInt(realBalance.BRL), parseInt(ticker.buy * 1e8));
-                    console.log(ticker.buy);
+                    const order = await buyOfer(
+                        blinktrade,
+                        "1",
+                        parseInt((realBalance.BRL / ticker.buy).toFixed(0)),
+                        parseInt((ticker.buy * 1e8).toFixed(0))
+                    );
                     console.log("COmpra");
                 }
             }
             if (first > 1 && firstASecond > 1 && thirdASecond < 1) {
                 const bitBalance = await getBalance(blinktrade);
                 if (bitBalance.BTC > 0) {
-                    const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt(ticker.buy * 1e8));
-                    console.log(ticker.buy);
-                    console.log("AEEWWW2");
+                    const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));
+                    console.log("Venda");
                 }
             }
             lastValues = lastValues.slice(1, lastValues.length);

@@ -71,7 +71,6 @@ const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStore
 const init = () => {
     const exchanges = ["foxbit", "flowbtc", "mercado", "braziliex", "negocieCoins"];
     setTimeout(() => {
-        console.log("nexStep app");
         for (let i = 0; i < exchanges.length; i++) {
             for (let j = 0; j < exchanges.length; j++) {
                 if (i != j) {

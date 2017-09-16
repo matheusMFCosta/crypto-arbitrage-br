@@ -75,7 +75,6 @@ async function fetchData() {
             await fetchDataNegocieCoins()
         ])
             .then(response => {
-                console.log("newStep");
                 for (let key in response) {
                     const currentNode = response[key];
                     if (currentNode.name) {
