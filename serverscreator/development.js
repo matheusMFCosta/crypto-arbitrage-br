@@ -43,6 +43,11 @@ app.use(
     })
 );
 
+var http = require("http");
+setInterval(function() {
+    http.get("https://infinite-shelf-92987.herokuapp.com/client");
+}, 300000); // every 5 minutes (300000)
+
 server.init();
 
 app.use(cookieParser());
