@@ -43,8 +43,6 @@ app.use(
     })
 );
 
-var https = require("http");
-
 server.init();
 
 app.use(cookieParser());
@@ -57,7 +55,7 @@ http.createServer(app).listen(process.env.PORT || 80);
 
 const wow = () => {
     setTimeout(function() {
-        https.get("https://infinite-shelf-92987.herokuapp.com/client");
+        http.get("https://infinite-shelf-92987.herokuapp.com/client");
         wow();
     }, 300000); // every 5 minutes (300000)
 };
