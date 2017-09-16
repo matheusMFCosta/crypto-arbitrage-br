@@ -64,7 +64,7 @@ async function fetchDataFoxBit() {
         lastValues.push(ticker.buy);
     } else {
         if (ticker.buy == lastValues[lastValues.length - 1]) {
-            lastValues = lastValues.slice(1, lastValues.length);
+            console.log("mewsmo");
         } else {
             lastValues.push(ticker.buy);
             for (let i = 0; i < lastValues.length; i++) {
