@@ -29,19 +29,19 @@ var app = new express();
 var port = 443;
 
 console.log("Environment: DEVELOPMENT");
-// var compiler = webpack(config);
+var compiler = webpack(config);
 
-// app.use(
-//     require("webpack-dev-middleware")(compiler, {
-//         quiet: false,
-//         publicPath: config.output.publicPath
-//     })
-// );
-// app.use(
-//     require("webpack-hot-middleware")(compiler, {
-//         log: () => {}
-//     })
-// );
+app.use(
+    require("webpack-dev-middleware")(compiler, {
+        quiet: false,
+        publicPath: config.output.publicPath
+    })
+);
+app.use(
+    require("webpack-hot-middleware")(compiler, {
+        log: () => {}
+    })
+);
 
 server.init();
 
@@ -49,6 +49,6 @@ app.use(cookieParser());
 
 app.use(enrouten({ directory: "./routes.js" }));
 
-// http.createServer(app).listen(process.env.PORT || 80);
+http.createServer(app).listen(process.env.PORT || 80);
 
 //https.createServer(credentials, app).listen(443);
