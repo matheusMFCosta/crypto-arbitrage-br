@@ -78,11 +78,11 @@ async function fetchDataFoxBit() {
             const thirdASecond = (lastValues[11] + lastValues[10]) / (lastValues[9] + lastValues[8]);
             if (first < 1 && firstASecond < 1 && thirdASecond > 1) {
                 const realBalance = await getBalance(blinktrade);
-                if (realBalance.BRL > 0) {
+                if (realBalance.BRL > 10000000) {
                     const order = await buyOfer(
                         blinktrade,
                         "1",
-                        parseInt((realBalance.BRL / ticker.buy).toFixed(0)),
+                        parseInt(((realBalance.BRL - 5000000) / ticker.buy).toFixed(0)),
                         parseInt((ticker.buy * 1e8).toFixed(0))
                     );
                     console.log("COmpra");
@@ -90,7 +90,7 @@ async function fetchDataFoxBit() {
             }
             if (first > 1 && firstASecond > 1 && thirdASecond < 1) {
                 const bitBalance = await getBalance(blinktrade);
-                if (bitBalance.BTC > 0) {
+                if (bitBalance.BTC > 10000000) {
                     const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));
                     console.log("Venda");
                 }
