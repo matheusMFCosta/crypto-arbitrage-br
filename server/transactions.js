@@ -83,7 +83,7 @@ async function fetchDataFoxBit() {
                         blinktrade,
                         "1",
                         parseInt((realBalance.BRL / ticker.buy).toFixed(0)),
-                        parseInt(realBalance.BRL.toFixed(0))
+                        parseInt((ticker.buy * 1e8).toFixed(0))
                     );
                     console.log("COmpra");
                 }
