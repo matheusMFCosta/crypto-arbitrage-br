@@ -92,6 +92,7 @@ async function fetchDataFoxBit() {
                     );
                     console.log("COmpra");
                 }
+                lastValues = lastValues.slice(5, lastValues.length);
             }
             //ve se subida , subida e descida e vende
             if (first > 1 && firstASecond > 1 && SecondAThird < 1) {
@@ -100,6 +101,7 @@ async function fetchDataFoxBit() {
                     const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));
                     console.log("Venda");
                 }
+                lastValues = lastValues.slice(5, lastValues.length);
             }
             lastValues = lastValues.slice(1, lastValues.length);
         }
