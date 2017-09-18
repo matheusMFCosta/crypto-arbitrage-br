@@ -51,6 +51,7 @@ const buyOfer = (blinktrade, operation, ammount, price) => {
     });
 };
 
+//guess compra e venda
 async function fetchDataFoxBit() {
     // setInterval(() => {
     const realBalance = await getBalance(blinktrade);
@@ -59,12 +60,15 @@ async function fetchDataFoxBit() {
     let secondDivision = 0;
     let thirdDivision = 0;
 
+    //cria um array de minimo 12 elements - 15 seg de diferenca cada pomto
     if (lastValues.length < 11) {
         lastValues.push(ticker.buy);
     } else {
+        //se o proximo valor for igual o antigo so espera o proximo
         if (ticker.buy == lastValues[lastValues.length - 1]) {
         } else {
             lastValues.push(ticker.buy);
+            //pra cada elemeto do array divide ele em 3 para fazer calculos
             for (let i = 0; i < lastValues.length; i++) {
                 if (i < 4) {
                     firstDivision = firstDivision + lastValues[i];
@@ -75,8 +79,9 @@ async function fetchDataFoxBit() {
             //console.log(first);
             const first = (lastValues[2] + lastValues[3]) / (lastValues[1] + lastValues[0]);
             const firstASecond = secondDivision / firstDivision;
-            const thirdASecond = (lastValues[11] + lastValues[10]) / (lastValues[9] + lastValues[8]);
-            if (first < 1 && firstASecond < 1 && thirdASecond > 1) {
+            const SecondAThird = (lastValues[11] + lastValues[10]) / (lastValues[9] + lastValues[8]);
+            //ve se descida , descida e subida e compra
+            if (first < 1 && firstASecond < 1 && SecondAThird > 1) {
                 const realBalance = await getBalance(blinktrade);
                 if (realBalance.BRL > 10000000) {
                     const order = await buyOfer(
@@ -88,9 +93,10 @@ async function fetchDataFoxBit() {
                     console.log("COmpra");
                 }
             }
-            if (first > 1 && firstASecond > 1 && thirdASecond < 1) {
+            //ve se subida , subida e descida e vende
+            if (first > 1 && firstASecond > 1 && SecondAThird < 1) {
                 const bitBalance = await getBalance(blinktrade);
-                if (bitBalance.BTC > 10000000) {
+                if (bitBalance.BTC > 100000) {
                     const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));
                     console.log("Venda");
                 }
@@ -98,55 +104,6 @@ async function fetchDataFoxBit() {
             lastValues = lastValues.slice(1, lastValues.length);
         }
     }
-    //}, 10000);
-
-    // blinktrade
-    //     .sendOrder({
-    //         side: "2",
-    //         price: parseInt((14000.0 * 1e8).toFixed(0)),
-    //         amount: parseInt((0.004 * 1e8).toFixed(0)),
-    //         symbol: "BTCBRL"
-    //     })
-    //     .then(function(order) {
-    //         console.log("ooorder", order);
-    //     });
-
-    // blinktrade
-    //     .sendOrder({
-    //         side: "1",
-    //         price: parseInt((100 * 1e8).toFixed(0)),
-    //         amount: parseInt((0.004 * 1e8).toFixed(0)),
-    //         symbol: "BTCBRL"
-    //     })
-    //     .then(function(order) {
-    //         console.log("ooorder", order);
-    //     });
-
-    //     blinktrade
-    //         .sendOrder({
-    //             side: "1",
-    //             price: parseInt(550 * 1e8, 10),
-    //             amount: parseInt(0.05 * 1e8, 10),
-    //             symbol: "BTCUSD"
-    //         })
-    //         .then(function(order) {
-    //             console.log(order);
-    //             console.log("Cancelling order: #" + order[0].OrderID);
-    //             return blinktrade.cancelOrder({ orderId: order[0].OrderID, clientId: order[0].ClOrdID });
-    //         })
-    //         .then(function(order) {
-    //             console.log(order);
-    //             console.log("Order: #" + order[0].OrderID + " cancelled");
-    //         })
-    //         .catch(function(err) {
-    //             console.log(err);
-    //         });
-
-    const keys = {
-        apiKey: "lG1tOZYCQesbLIxnSkOic2YowKEgwaj1jooRJfW15rU",
-        senha: "zElSxQKBEuf2p4u",
-        secret: "fGUDMNhKdHiOFMi3gMSDsMSX1RNHdDGH4Vk3Gx4A3mA"
-    };
 }
 
 var wait = ms => new Promise(r => setTimeout(r, ms));
