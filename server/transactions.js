@@ -61,7 +61,7 @@ async function fetchDataFoxBit() {
     let thirdDivision = 0;
 
     //cria um array de minimo 12 elements - 15 seg de diferenca cada pomto
-    if (lastValues.length < 11) {
+    if (lastValues.length < 107) {
         lastValues.push(ticker.buy);
     } else {
         //se o proximo valor for igual o antigo so espera o proximo
@@ -70,16 +70,16 @@ async function fetchDataFoxBit() {
             lastValues.push(ticker.buy);
             //pra cada elemeto do array divide ele em 3 para fazer calculos
             for (let i = 0; i < lastValues.length; i++) {
-                if (i < 4) {
+                if (i < 36) {
                     firstDivision = firstDivision + lastValues[i];
-                } else if (i >= 4 && i < 8) {
+                } else if (i >= 36 && i < 72) {
                     secondDivision = secondDivision + lastValues[i];
                 }
             }
             //console.log(first);
-            const first = (lastValues[2] + lastValues[3]) / (lastValues[1] + lastValues[0]);
+            const first = (lastValues[34] + lastValues[35]) / (lastValues[1] + lastValues[0]);
             const firstASecond = secondDivision / firstDivision;
-            const SecondAThird = (lastValues[11] + lastValues[10]) / (lastValues[9] + lastValues[8]);
+            const SecondAThird = (lastValues[107] + lastValues[106]) / (lastValues[36] + lastValues[37]);
             //ve se descida , descida e subida e compra
             if (first < 1 && firstASecond < 1 && SecondAThird > 1) {
                 const realBalance = await getBalance(blinktrade);
@@ -92,7 +92,7 @@ async function fetchDataFoxBit() {
                     );
                     console.log("COmpra");
                 }
-                lastValues = lastValues.slice(5, lastValues.length);
+                lastValues = lastValues.slice(36, lastValues.length);
             }
             //ve se subida , subida e descida e vende
             if (first > 1 && firstASecond > 1 && SecondAThird < 1) {
@@ -114,7 +114,7 @@ var repeat = (ms, func) => new Promise(r => (setInterval(func, ms), wait(ms).the
 
 async function init() {
     try {
-        repeat(10000, () => Promise.all([fetchDataFoxBit()]));
+        repeat(5000, () => Promise.all([fetchDataFoxBit()]));
     } catch (e) {
         console.log(e);
     }
