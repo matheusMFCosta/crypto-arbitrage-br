@@ -1,13 +1,15 @@
 var fs = require("fs");
 var dataFlow = require("./getData.js");
-var populateGraph = require("./populateGraph.js");
-var transactions = require("./transactions.js");
-var messageApp = require("./messageApp.js");
+// var populateGraph = require("./populateGraph.js");
+// var transactions = require("./transactions.js");
+//var messageApp = require("./messageApp.js");
 
+const flowbtc = require("./exchangesApis/flowbtc.js");
 const init = (req, res) => {
-    populateGraph.init();
-    messageApp.init();
-    transactions.init();
+    flowbtc.init();
+    // populateGraph.init();
+    // messageApp.init();
+    // transactions.init();
 };
 
 const route = (req, res) => {

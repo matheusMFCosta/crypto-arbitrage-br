@@ -31,17 +31,17 @@ var port = 443;
 console.log("Environment: DEVELOPMENT");
 var compiler = webpack(config);
 
-app.use(
-    require("webpack-dev-middleware")(compiler, {
-        quiet: false,
-        publicPath: config.output.publicPath
-    })
-);
-app.use(
-    require("webpack-hot-middleware")(compiler, {
-        log: () => {}
-    })
-);
+// app.use(
+//     require("webpack-dev-middleware")(compiler, {
+//         quiet: false,
+//         publicPath: config.output.publicPath
+//     })
+// );
+// app.use(
+//     require("webpack-hot-middleware")(compiler, {
+//         log: () => {}
+//     })
+// );
 
 server.init();
 
