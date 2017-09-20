@@ -145,9 +145,7 @@ const deposit = () => {
 async function init() {
     try {
         Promise.all([getBalance(), getTicker(), sendBuyOrder(0.01, 100.0), sendSellOrder(0.01, 100.0)]).then(res => {
-            console.log("MERCADO");
             console.log(res);
-            console.log("_____");
         });
     } catch (e) {
         console.log(e);

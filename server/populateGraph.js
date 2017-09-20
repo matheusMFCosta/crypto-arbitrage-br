@@ -18,15 +18,14 @@ async function fetchDataFoxBit() {
 }
 
 async function fetchDataMercadoBitcoin() {
-    const mercado = new ccxt.mercado();
-    const market = await mercado.fetchTicker("BTC/BRL");
-
-    return {
+    const market = await axios("https://www.mercadobitcoin.net/api/BTC/ticker/");
+    const tickerObject = {
         name: "mercado",
-        bid: market.bid,
-        ask: market.ask,
-        timestamp: market.timestamp
+        ask: market.data.ticker.sell,
+        bid: market.data.ticker.buy,
+        date: market.data.ticker.date
     };
+    return tickerObject;
 }
 
 async function fetchDataFlowBTC() {

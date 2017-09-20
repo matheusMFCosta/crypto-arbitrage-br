@@ -117,9 +117,7 @@ const deposit = () => {
 async function init() {
     try {
         Promise.all([getBalance(), getTicker()]).then(res => {
-            console.log("FOXBIT");
             console.log(res);
-            console.log("_____");
         });
     } catch (e) {
         console.log(e);
