@@ -54,7 +54,6 @@ const buyOfer = (blinktrade, operation, ammount, price) => {
 //guess compra e venda
 async function fetchDataFoxBit() {
     // setInterval(() => {
-    const realBalance = await getBalance(blinktrade);
     const ticker = await getTicker(blinktrade);
     let firstDivision1 = 0;
     let secondDivision = 0;
@@ -112,7 +111,7 @@ async function fetchDataFoxBit() {
                 lastValues = lastValues.slice(36, lastValues.length);
             }
             //ve se subida , subida e descida e vende
-            if (first > 1 && firstASecond > 1 && SecondAThird < 1) {
+            if (secondDivision / firstDivision > 1 && firstASecond < 1 && SecondAThird < 1) {
                 const bitBalance = await getBalance(blinktrade);
                 if (bitBalance.BTC > 100000) {
                     const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));

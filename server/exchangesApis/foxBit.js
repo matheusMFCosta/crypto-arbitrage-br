@@ -1,4 +1,4 @@
-var BlinkTradeRest = require("./blinktrade.js").BlinkTradeRest;
+var BlinkTradeRest = require("./../blinktrade.js").BlinkTradeRest;
 var blinktrade = new BlinkTradeRest({
     prod: true,
     key: "YYCz5oOBVo5ZdXGvC7KLAVhCwtqU2d7ASU2JvsuVsnE",
@@ -25,17 +25,44 @@ const getBalance = () => {
 const getTicker = () => {
     return new Promise(resolve => {
         blinktrade.ticker().then(function(ticker) {
-            resolve(ticker);
+            console.log("tiker", ticker);
+            const tickerObject = {
+                last: ticker.last,
+                buy: ticker.buy,
+                sell: ticker.sell,
+                date: +new Date()
+            };
+            resolve(tickerObject);
         });
     });
 };
 
 // 1- buy / 2-sell
-const sendOrder = (operation, ammount, price) => {
+const sendBuyOrder = (ammount, price) => {
     return new Promise(resolve => {
         blinktrade
             .sendOrder({
-                side: operation,
+                side: "1",
+                price: price,
+                amount: ammount,
+                symbol: "BTCBRL"
+            })
+            .then(function(order) {
+                console.log(order);
+                resolve(order);
+            })
+            .catch(function(e) {
+                console.log(e);
+                resolve();
+            });
+    });
+};
+
+const sendSellOrder = (ammount, price) => {
+    return new Promise(resolve => {
+        blinktrade
+            .sendOrder({
+                side: "2",
                 price: price,
                 amount: ammount,
                 symbol: "BTCBRL"
@@ -87,6 +114,18 @@ const deposit = () => {
     });
 };
 
+async function init() {
+    try {
+        Promise.all([getBalance(), getTicker()]).then(res => {
+            console.log("FOXBIT");
+            console.log(res);
+            console.log("_____");
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 module.exports = {
-    tranferWithdrawl: tranferWithdrawl
+    init: init
 };

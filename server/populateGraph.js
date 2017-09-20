@@ -42,7 +42,6 @@ async function fetchDataFlowBTC() {
 }
 
 async function fetchDataBraziliex() {
-    const flowbtc = new ccxt.flowbtc();
     const market = await axios("http://braziliex.com/api/v1/public/ticker/btc_brl");
 
     return {
@@ -54,7 +53,6 @@ async function fetchDataBraziliex() {
 }
 
 async function fetchDataNegocieCoins() {
-    const flowbtc = new ccxt.flowbtc();
     const market = await axios("https://broker.negociecoins.com.br/api/v3/BTCBRL/ticker");
 
     return {
