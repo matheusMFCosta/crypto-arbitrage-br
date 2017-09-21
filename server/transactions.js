@@ -55,7 +55,7 @@ const buyOfer = (blinktrade, operation, ammount, price) => {
 async function fetchDataFoxBit() {
     // setInterval(() => {
     const ticker = await getTicker(blinktrade);
-    let firstDivision1 = 0;
+    let firstDivision = 0;
     let secondDivision = 0;
     let thirdDivision = 0;
     let fourthDivision = 0;
