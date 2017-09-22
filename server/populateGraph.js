@@ -21,8 +21,8 @@ async function fetchDataMercadoBitcoin() {
     const market = await axios("https://www.mercadobitcoin.net/api/BTC/ticker/");
     const tickerObject = {
         name: "mercado",
-        ask: market.data.ticker.sell,
-        bid: market.data.ticker.buy,
+        ask: parseFloat(market.data.ticker.sell),
+        bid: parseFloat(market.data.ticker.buy),
         date: market.data.ticker.date
     };
     return tickerObject;
