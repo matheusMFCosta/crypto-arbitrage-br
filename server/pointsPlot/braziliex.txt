@@ -1,0 +1,1 @@
+,{"name":"braziliex","bid":12503,"ask":14290,"timestamp":1506109339166},{"name":"braziliex","bid":12503,"ask":14290,"timestamp":1506109363214},{"name":"braziliex","bid":12503,"ask":14290,"timestamp":1506109386490},{"name":"braziliex","bid":12503,"ask":14290,"timestamp":1506109408406},{"name":"braziliex","bid":12503,"ask":14290,"timestamp":1506109429047}

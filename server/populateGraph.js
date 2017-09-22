@@ -23,7 +23,7 @@ async function fetchDataMercadoBitcoin() {
         name: "mercado",
         ask: parseFloat(market.data.ticker.sell),
         bid: parseFloat(market.data.ticker.buy),
-        date: market.data.ticker.date
+        timestamp: market.data.ticker.date
     };
     return tickerObject;
 }

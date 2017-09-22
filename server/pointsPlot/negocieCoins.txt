@@ -1,0 +1,1 @@
+,{"name":"negocieCoins","bid":13015.01,"ask":13114,"timestamp":1506109340},{"name":"negocieCoins","bid":13015.01,"ask":13114,"timestamp":1506109363},{"name":"negocieCoins","bid":13015.01,"ask":13114,"timestamp":1506109386},{"name":"negocieCoins","bid":13015.01,"ask":13114,"timestamp":1506109409},{"name":"negocieCoins","bid":13015.01,"ask":13114,"timestamp":1506109430}

@@ -1,0 +1,1 @@
+,{"name":"foxbit","bid":13042.04,"ask":13147,"timestamp":1506109329935},{"name":"foxbit","bid":13046,"ask":13140,"timestamp":1506109359246},{"name":"foxbit","bid":13048,"ask":13146.99,"timestamp":1506109380126},{"name":"foxbit","bid":13050.16,"ask":13146.99,"timestamp":1506109403581},{"name":"foxbit","bid":13050.16,"ask":13146.99,"timestamp":1506109425926}

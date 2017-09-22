@@ -1,0 +1,1 @@
+,{"name":"mercado","ask":13185,"bid":13180,"timestamp":1506109249},{"name":"mercado","ask":13185,"bid":13180,"timestamp":1506109304},{"name":"mercado","ask":13150,"bid":13148,"timestamp":1506109362},{"name":"mercado","ask":13150,"bid":13148,"timestamp":1506109377},{"name":"mercado","ask":13185,"bid":13150,"timestamp":1506109391}
