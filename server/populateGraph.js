@@ -27,17 +27,18 @@ async function fetchDataMercadoBitcoin() {
     return tickerObject;
 }
 
-// async function fetchDataFlowBTC() {
-//     const flowbtc = new ccxt.flowbtc();
-//     const market = await flowbtc.fetchTicker("BTC/BRL");
-
-//     return {
-//         name: "flowbtc",
-//         bid: market.bid,
-//         ask: market.ask,
-//         timestamp: market.timestamp
-//     };
-// }
+async function fetchDataBitcointoyouBTC() {
+    const data = await axios("https://www.bitcointoyou.com/API/ticker.aspx").then(res => {
+        return {
+            name: "bitcointoyou",
+            ask: parseFloat(res.data.ticker.buy),
+            bid: parseFloat(res.data.ticker.sell),
+            date: res.data.ticker.date
+        };
+        resolve(tickerObject);
+    });
+    return data;
+}
 
 async function fetchDataBraziliex() {
     const market = await axios("http://braziliex.com/api/v1/public/ticker/btc_brl");
@@ -62,7 +63,13 @@ async function fetchDataNegocieCoins() {
 
 async function fetchData() {
     try {
-        Promise.all([await fetchDataFoxBit(), await fetchDataMercadoBitcoin(), await fetchDataBraziliex(), await fetchDataNegocieCoins()])
+        Promise.all([
+            await fetchDataBitcointoyouBTC(),
+            await fetchDataFoxBit(),
+            await fetchDataMercadoBitcoin(),
+            await fetchDataBraziliex(),
+            await fetchDataNegocieCoins()
+        ])
             .then(response => {
                 for (let key in response) {
                     const currentNode = response[key];

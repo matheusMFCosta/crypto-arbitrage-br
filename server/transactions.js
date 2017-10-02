@@ -130,7 +130,7 @@ var repeat = (ms, func) => new Promise(r => (setInterval(func, ms), wait(ms).the
 
 async function init() {
     try {
-        repeat(5000, () => Promise.all([fetchDataFoxBit()]));
+        repeat(10000, () => Promise.all([fetchDataFoxBit()]));
     } catch (e) {
         console.log(e);
     }

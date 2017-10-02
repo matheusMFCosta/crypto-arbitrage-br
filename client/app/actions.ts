@@ -39,7 +39,7 @@ export class fetchExchangeStoresPointsArray implements Operation {
     process({ getState, action }, dispatch, done) {
         console.log(action.payload, action.payload == "?");
         const period = action.payload == "?" ? getState().app.period : action.payload;
-        const exchangeStores = ["foxbit", "flowbtc", "mercado", "braziliex", "negocieCoins"];
+        const exchangeStores = ["foxbit", "bitcointoyou", "mercado"];
         for (let key in exchangeStores) {
             axios("/server/getData?exchange=" + exchangeStores[key] + "&period=" + period)
                 .then(resp => dispatch(new fetchExchangeStoresPointsArraySucceeded(resp.data)))

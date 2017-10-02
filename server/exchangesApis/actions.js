@@ -22,7 +22,7 @@ async function init(exchangeName, action, param1, param2, param3) {
         return;
     }
 
-    if (action == "sendBuyerOrder") {
+    if (action == "sendBuyOrder") {
         console.log(await exchange.sendBuyOrder(param1, param2));
         return;
     }

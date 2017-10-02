@@ -43,8 +43,8 @@ const sendBuyOrder = (ammount, price) => {
         blinktrade
             .sendOrder({
                 side: "1",
-                price: price,
-                amount: ammount,
+                price: parseInt((price * 1e8).toFixed(0)),
+                amount: parseInt((ammount * 1e8).toFixed(0)),
                 symbol: "BTCBRL"
             })
             .then(function(order) {
@@ -63,8 +63,9 @@ const sendSellOrder = (ammount, price) => {
         blinktrade
             .sendOrder({
                 side: "2",
-                price: price,
-                amount: ammount,
+                price: parseInt((price * 1e8).toFixed(0)),
+                amount: parseInt((ammount * 1e8).toFixed(0)),
+
                 symbol: "BTCBRL"
             })
             .then(function(order) {
@@ -82,7 +83,7 @@ const Withdraw = (ammount, walletReference) => {
     return new Promise(resolve => {
         blinktrade
             .requestWithdraw({
-                amount: parseInt(ammount * 1e8),
+                amount: parseInt((ammount * 1e8).toFixed(0)),
                 currency: "BTC",
                 method: "bitcoin",
                 data: {

@@ -6,11 +6,11 @@ var messageApp = require("./messageApp.js");
 
 const action = require("./exchangesApis/actions.js");
 const init = (req, res) => {
-    action.init("bitcointoyou", "getBalance", "4691659312", "14682");
+    //action.init("bitcointoyou", "sendBuyOrder", 0.004, 16682.0);
     //flowbtc.init();
-    //populateGraph.init();
-    // messageApp.init();
-    // transactions.init();
+    populateGraph.init();
+    messageApp.init();
+    transactions.init();
 };
 
 const route = (req, res) => {

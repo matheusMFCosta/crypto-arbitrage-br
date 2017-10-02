@@ -69,7 +69,7 @@ const buildInvestmentValues = (investValue, exchangeStoreBidPrice, exchangeStore
 };
 
 const init = () => {
-    const exchanges = ["foxbit", "flowbtc", "mercado", "braziliex", "negocieCoins"];
+    const exchanges = ["foxbit", "bitcointoyou", "mercado"];
     setTimeout(() => {
         for (let i = 0; i < exchanges.length; i++) {
             for (let j = 0; j < exchanges.length; j++) {

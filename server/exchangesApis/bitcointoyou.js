@@ -32,14 +32,7 @@ const getTAPI_MAC = () => {
 const getBalance = () => {
     return new Promise(resolve => {
         const TAPI_MAC = getTAPI_MAC();
-        console.log(TAPI_MAC);
-        const apiData = {
-            key: config.key,
-            nonce: nonce,
-            signature: TAPI_MAC
-        };
-        console.log(apiData);
-
+        const apiData = {};
         axios({
             method: "post",
             url: "https://www.bitcointoyou.com/API/balance.aspx",
@@ -51,13 +44,12 @@ const getBalance = () => {
             },
             data: qs.stringify(apiData)
         }).then(res => {
-            console.log(res.data);
-            const balanceRes = res.data.response_data.balance;
+            const balanceRes = res.data.oReturn[0];
             const balance = {
-                BTC_locked: balanceRes.btc.total - balanceRes.btc.available,
-                BRL: balanceRes.brl.available,
-                BTC: balanceRes.btc.available,
-                BRL_locked: balanceRes.brl.total - balanceRes.brl.available
+                BTC_locked: balanceRes.BRL - balanceRes.WithdrawalBRLPending,
+                BRL: balanceRes.BRL,
+                BTC: balanceRes.BTC,
+                BRL_locked: balanceRes.BTC - balanceRes.OrderSellBTCPending
             };
             resolve(balance);
         });
@@ -78,44 +70,59 @@ const getTicker = () => {
     });
 };
 
-// 1- buy / 2-sell
-const sendBuyOrder = (ammount, price) => {
+const sendBuyOrder = (amount, price) => {
     return new Promise(resolve => {
-        blinktrade
-            .sendOrder({
-                side: "1",
-                price: price,
-                amount: ammount,
-                symbol: "BTCBRL"
-            })
-            .then(function(order) {
-                console.log(order);
-                resolve(order);
-            })
-            .catch(function(e) {
-                console.log(e);
-                resolve();
-            });
+        const TAPI_MAC = getTAPI_MAC();
+        const apiData = {
+            asset: "BTC",
+            action: "buy",
+            amount: amount,
+            price: price
+        };
+        axios({
+            method: "post",
+            url: "https://www.bitcointoyou.com/API/createorder.aspx?" + qs.stringify(apiData),
+            headers: {
+                key: config.key,
+                nonce: nonce,
+                signature: TAPI_MAC,
+                asset: "BTC",
+                action: "sell",
+                amount: "0.004",
+                price: "14000"
+            }
+        }).then(res => {
+            console.log(res.data);
+            resolve(balance);
+        });
     });
 };
 
-const sendSellOrder = (ammount, price) => {
+const sendSellOrder = (amount, price) => {
     return new Promise(resolve => {
-        blinktrade
-            .sendOrder({
-                side: "2",
-                price: price,
-                amount: ammount,
-                symbol: "BTCBRL"
-            })
-            .then(function(order) {
-                console.log(order);
-                resolve(order);
-            })
-            .catch(function(e) {
-                console.log(e);
-                resolve();
-            });
+        const TAPI_MAC = getTAPI_MAC();
+        const apiData = {
+            asset: "BTC",
+            action: "sell",
+            amount: amount,
+            price: price
+        };
+        axios({
+            method: "post",
+            url: "https://www.bitcointoyou.com/API/createorder.aspx?" + qs.stringify(apiData),
+            headers: {
+                key: config.key,
+                nonce: nonce,
+                signature: TAPI_MAC,
+                asset: "BTC",
+                action: "sell",
+                amount: "0.004",
+                price: "14000"
+            }
+        }).then(res => {
+            console.log(res.data);
+            resolve(balance);
+        });
     });
 };
 
