@@ -7,7 +7,6 @@ var axios = require("axios");
 
 async function fetchDataFoxBit() {
     const foxbit = new ccxt.foxbit();
-    //console.log(foxbit);
     const market = await foxbit.fetchTicker("BTC/BRL");
     return {
         name: "foxbit",
@@ -28,17 +27,17 @@ async function fetchDataMercadoBitcoin() {
     return tickerObject;
 }
 
-async function fetchDataFlowBTC() {
-    const flowbtc = new ccxt.flowbtc();
-    const market = await flowbtc.fetchTicker("BTC/BRL");
+// async function fetchDataFlowBTC() {
+//     const flowbtc = new ccxt.flowbtc();
+//     const market = await flowbtc.fetchTicker("BTC/BRL");
 
-    return {
-        name: "flowbtc",
-        bid: market.bid,
-        ask: market.ask,
-        timestamp: market.timestamp
-    };
-}
+//     return {
+//         name: "flowbtc",
+//         bid: market.bid,
+//         ask: market.ask,
+//         timestamp: market.timestamp
+//     };
+// }
 
 async function fetchDataBraziliex() {
     const market = await axios("http://braziliex.com/api/v1/public/ticker/btc_brl");
@@ -53,7 +52,6 @@ async function fetchDataBraziliex() {
 
 async function fetchDataNegocieCoins() {
     const market = await axios("https://broker.negociecoins.com.br/api/v3/BTCBRL/ticker");
-
     return {
         name: "negocieCoins",
         bid: parseFloat(market.data.buy),
@@ -64,13 +62,7 @@ async function fetchDataNegocieCoins() {
 
 async function fetchData() {
     try {
-        Promise.all([
-            await fetchDataFoxBit(),
-            await fetchDataMercadoBitcoin(),
-            await fetchDataFlowBTC(),
-            await fetchDataBraziliex(),
-            await fetchDataNegocieCoins()
-        ])
+        Promise.all([await fetchDataFoxBit(), await fetchDataMercadoBitcoin(), await fetchDataBraziliex(), await fetchDataNegocieCoins()])
             .then(response => {
                 for (let key in response) {
                     const currentNode = response[key];
@@ -102,13 +94,13 @@ async function fetchData() {
                 }
             })
             .then(function() {
-                new Promise(resolve => setTimeout(_ => fetchData(), 15000));
+                new Promise(resolve => setTimeout(_ => fetchData(), 5000));
             })
             .catch(err => {
-                new Promise(resolve => setTimeout(_ => fetchData(), 15000));
+                new Promise(resolve => setTimeout(_ => fetchData(), 5000));
             });
     } catch (err) {
-        new Promise(resolve => setTimeout(_ => fetchData(), 15000));
+        new Promise(resolve => setTimeout(_ => fetchData(), 5000));
     }
 }
 

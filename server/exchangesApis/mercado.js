@@ -153,5 +153,11 @@ async function init() {
 }
 
 module.exports = {
-    init: init
+    init: init,
+    getBalance,
+    getTicker,
+    sendBuyOrder,
+    sendSellOrder,
+    Withdraw,
+    deposit
 };

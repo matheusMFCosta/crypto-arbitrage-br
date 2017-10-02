@@ -1,1 +1,0 @@
-,{"name":"flowbtc","bid":13000,"ask":13365,"timestamp":1506109337697},{"name":"flowbtc","bid":13000,"ask":13365,"timestamp":1506109362448},{"name":"flowbtc","bid":13000,"ask":13365,"timestamp":1506109384790},{"name":"flowbtc","bid":13000,"ask":13365,"timestamp":1506109405702},{"name":"flowbtc","bid":13000,"ask":13365,"timestamp":1506109427431}

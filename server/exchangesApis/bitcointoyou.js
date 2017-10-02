@@ -1,36 +1,77 @@
+const axios = require("axios");
+const crypto = require("crypto");
+var qs = require("qs");
+
 var BlinkTradeRest = require("./../blinktrade.js").BlinkTradeRest;
-var blinktrade = new BlinkTradeRest({
+const config = {
     prod: true,
-    key: "YYCz5oOBVo5ZdXGvC7KLAVhCwtqU2d7ASU2JvsuVsnE",
-    secret: "gVZkqVIbrM1cUGkhgMkZD1ggj2pIgxP3GvCeGGI1OpE",
+    key: "5dbbb7df-aae2-441e-a603-73dfd6eb8347",
+    secret: "FD73B924AA2E99BBE53FD5EB148C5D1D",
     currency: "BRL"
-});
+};
+
+// const config = {
+//     prod: true,
+//     key: "Message",
+//     secret: "secret",
+//     currency: "BRL"
+// };
 
 let lastValues = [];
 
+let nonce = +new Date();
+
+const getTAPI_MAC = () => {
+    const message = nonce + config.key;
+    var hmac = crypto.createHmac("sha256", config.secret);
+    hmac.update(message);
+    const TAPI_MAC = hmac.digest("base-64");
+    return new Buffer(TAPI_MAC).toString("base64").toLocaleUpperCase();
+};
+
 const getBalance = () => {
     return new Promise(resolve => {
-        blinktrade
-            .balance()
-            .then(function(balance) {
-                resolve(balance[4]);
-            })
-            .catch(function(e) {
-                console.log(e);
-                resolve();
-            });
+        const TAPI_MAC = getTAPI_MAC();
+        console.log(TAPI_MAC);
+        const apiData = {
+            key: config.key,
+            nonce: nonce,
+            signature: TAPI_MAC
+        };
+        console.log(apiData);
+
+        axios({
+            method: "post",
+            url: "https://www.bitcointoyou.com/API/balance.aspx",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                key: config.key,
+                nonce: nonce,
+                signature: TAPI_MAC
+            },
+            data: qs.stringify(apiData)
+        }).then(res => {
+            console.log(res.data);
+            const balanceRes = res.data.response_data.balance;
+            const balance = {
+                BTC_locked: balanceRes.btc.total - balanceRes.btc.available,
+                BRL: balanceRes.brl.available,
+                BTC: balanceRes.btc.available,
+                BRL_locked: balanceRes.brl.total - balanceRes.brl.available
+            };
+            resolve(balance);
+        });
     });
 };
 
 const getTicker = () => {
     return new Promise(resolve => {
-        blinktrade.ticker().then(function(ticker) {
-            console.log("tiker", ticker);
+        axios("https://www.bitcointoyou.com/API/ticker.aspx").then(res => {
             const tickerObject = {
-                last: ticker.last,
-                buy: ticker.buy,
-                sell: ticker.sell,
-                date: +new Date()
+                last: res.data.ticker.last,
+                buy: res.data.ticker.buy,
+                sell: res.data.ticker.sell,
+                date: res.data.ticker.date
             };
             resolve(tickerObject);
         });
