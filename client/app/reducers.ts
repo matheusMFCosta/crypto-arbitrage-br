@@ -7,7 +7,7 @@ const multifactorInitialState: App = {
     init: false,
     exchangeStoresPointsArray: [],
     exchangeStoresTax: [],
-    investValue: "200",
+    investValue: "1000",
     period: "1h"
 };
 

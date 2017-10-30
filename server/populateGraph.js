@@ -12,7 +12,7 @@ async function fetchDataFoxBit() {
         name: "foxbit",
         bid: market.bid,
         ask: market.ask,
-        timestamp: market.timestamp
+        timestamp: +new Date()
     };
 }
 
@@ -33,7 +33,7 @@ async function fetchDataBitcointoyouBTC() {
             name: "bitcointoyou",
             ask: parseFloat(res.data.ticker.buy),
             bid: parseFloat(res.data.ticker.sell),
-            date: res.data.ticker.date
+            timestamp: +new Date()
         };
         resolve(tickerObject);
     });

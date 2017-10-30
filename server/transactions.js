@@ -64,7 +64,7 @@ async function fetchDataFoxBit() {
     let seventhdDivision = 0;
     let eigthDivision = 0;
     let ninehDivision = 0;
-    const arraySize = 36;
+    const arraySize = 72;
     //cria um array de minimo 108 elements - 15 seg de diferenca cada pomto
     if (lastValues.length < arraySize - 1) {
         console.log(lastValues);
@@ -122,7 +122,7 @@ async function fetchDataFoxBit() {
                     const order = await buyOfer(blinktrade, "2", parseInt(bitBalance.BTC), parseInt((ticker.buy * 1e8).toFixed(0)));
                     console.log("Venda");
                 }
-                lastValues = lastValues.slice(5, lastValues.length);
+                lastValues = lastValues.slice(36, lastValues.length);
             }
             lastValues = lastValues.slice(1, lastValues.length);
         }
