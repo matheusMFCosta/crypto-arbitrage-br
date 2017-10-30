@@ -61,7 +61,7 @@ const getTicker = () => {
                 last: res.data.ticker.last,
                 buy: res.data.ticker.buy,
                 sell: res.data.ticker.sell,
-                date: res.data.ticker.date
+                timestamp: res.data.ticker.date
             };
             resolve(tickerObject);
         });

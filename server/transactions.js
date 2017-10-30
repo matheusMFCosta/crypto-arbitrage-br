@@ -62,32 +62,38 @@ async function fetchDataFoxBit() {
     let fivethdDivision = 0;
     let sixhDivision = 0;
     let seventhdDivision = 0;
+    let eigthDivision = 0;
     let ninehDivision = 0;
-    const arraySize = 160;
+    const arraySize = 36;
     //cria um array de minimo 108 elements - 15 seg de diferenca cada pomto
     if (lastValues.length < arraySize - 1) {
+        x;
+        console.log(lastValues);
         lastValues.push(ticker.buy);
     } else {
         //se o proximo valor for igual o antigo so espera o proximo
         if (ticker.buy == lastValues[lastValues.length - 1]) {
         } else {
+            console.log(lastValues);
             lastValues.push(ticker.buy);
             //pra cada elemeto do array divide ele em 3 para fazer calculos
             for (let i = 0; i < lastValues.length; i++) {
                 if (i < arraySize * 1 / 9) {
                     firstDivision = firstDivision + lastValues[i];
-                } else if (i >= arraySize * 2 / 9 && i < arraySize * 3 / 9) {
+                } else if (i >= arraySize * 1 / 9 && i < arraySize * 2 / 9) {
                     secondDivision = secondDivision + lastValues[i];
-                } else if (i >= arraySize * 3 / 9 && i < arraySize * 4 / 9) {
+                } else if (i >= arraySize * 2 / 9 && i < arraySize * 3 / 9) {
                     thirdDivision = thirdDivision + lastValues[i];
-                } else if (i >= arraySize * 4 / 9 && i < arraySize * 5 / 9) {
+                } else if (i >= arraySize * 3 / 9 && i < arraySize * 4 / 9) {
                     fourthDivision = fourthDivision + lastValues[i];
-                } else if (i >= arraySize * 5 / 9 && i < arraySize * 6 / 9) {
+                } else if (i >= arraySize * 4 / 9 && i < arraySize * 5 / 9) {
                     fivethdDivision = fivethdDivision + lastValues[i];
-                } else if (i >= arraySize * 6 / 9 && i < arraySize * 7 / 9) {
+                } else if (i >= arraySize * 5 / 9 && i < arraySize * 6 / 9) {
                     sixhDivision = sixhDivision + lastValues[i];
-                } else if (i >= arraySize * 7 / 9 && i < arraySize * 8 / 9) {
+                } else if (i >= arraySize * 6 / 9 && i < arraySize * 7 / 9) {
                     seventhdDivision = seventhdDivision + lastValues[i];
+                } else if (i >= arraySize * 7 / 9 && i < arraySize * 8 / 9) {
+                    eigthDivision = eigthDivision + lastValues[i];
                 } else if (i >= arraySize * 8 / 9 && i < arraySize * 9 / 9) {
                     ninehDivision = ninehDivision + lastValues[i];
                 }
@@ -95,7 +101,7 @@ async function fetchDataFoxBit() {
             //console.log(first);
             const first = (thirdDivision + fourthDivision) / (secondDivision + firstDivision);
             const firstASecond = (fivethdDivision + sixhDivision) / (thirdDivision + fourthDivision);
-            const SecondAThird = (ninehDivision + seventhdDivision) / (fivethdDivision + sixhDivision);
+            const SecondAThird = (ninehDivision + eigthDivision) / (seventhdDivision + sixhDivision);
             //ve se descida , descida e subida e compra
             if (first < 1 && firstASecond < 1 && SecondAThird > 1) {
                 const realBalance = await getBalance(blinktrade);

@@ -30,7 +30,7 @@ const getTicker = () => {
                 last: ticker.last,
                 buy: ticker.buy,
                 sell: ticker.sell,
-                date: +new Date()
+                timestamp: +new Date()
             };
             resolve(tickerObject);
         });

@@ -91,7 +91,7 @@ const init = () => {
                     const exchangeStoreTaxData1 = getExchangeStoreTaxData(firstExchangeName, exchangeStoresTax);
                     const exchangeStoreTaxData2 = getExchangeStoreTaxData(secondExchangeName, exchangeStoresTax);
 
-                    const investValue = 10000;
+                    const investValue = 1000;
                     const taxValues = buildInvestmentValues(
                         investValue,
                         secondExchangePoint.bid,
