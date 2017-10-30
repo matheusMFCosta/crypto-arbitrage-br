@@ -67,7 +67,6 @@ async function fetchDataFoxBit() {
     const arraySize = 36;
     //cria um array de minimo 108 elements - 15 seg de diferenca cada pomto
     if (lastValues.length < arraySize - 1) {
-        x;
         console.log(lastValues);
         lastValues.push(ticker.buy);
     } else {
